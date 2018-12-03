@@ -1,0 +1,4 @@
+fonttools==3.33.0
+requests==2.20.1
+Scrapy==1.5.1
+scrapy-rotating-proxies==0.5
