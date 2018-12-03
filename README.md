@@ -37,9 +37,20 @@ $ scrapy crawl movie
 
 猫眼对同一 IP 的频繁请求会采取屏蔽措施，所以可以用代理在一定程度上避免。[`proxy.py`](maoyan/spiders/proxy.py)是一个用来爬取有效代理的爬虫， 生成的爬虫会保存在 [proxies.txt](proxies.txt) 里。
 
+注意，本爬虫会在爬取之后会测试代理的可用性，阻塞性请求。
+
+如不用代理，可以注释 [`settings.py`](maoyan/settings.py) 中的如下内容：
+
+```python
+DOWNLOADER_MIDDLEWARES = {
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+}
+```
+
 #### 3. JSON Pipeline
 
-爬取的数据自动保存为 jsonline 文件，为此配置了一个 [pipeline](maoyan/pipelines.py)。
+爬取的数据自动保存为 [`jsonline`](movie.jsonline) 文件，为此配置了一个 [pipeline](maoyan/pipelines.py)。
 
 
 
